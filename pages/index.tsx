@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import jsPDF from "jspdf";
 
 export default function InvoiceDemo() {
   const [client, setClient] = useState("");
@@ -67,34 +66,6 @@ export default function InvoiceDemo() {
     setDueDate("");
   };
 
-  const generatePDF = (inv) => {
-    const doc = new jsPDF();
-    doc.setFontSize(12);
-
-    if (logo) {
-      doc.addImage(logo, "PNG", 150, 10, 40, 20);
-    }
-
-    doc.text(`Rechnung ${inv.number}`, 20, 20);
-    doc.text(`Datum: ${inv.date}`, 20, 30);
-    doc.text(`Kunde: ${inv.client}`, 20, 40);
-    doc.text(`Beschreibung: ${inv.description}`, 20, 50);
-    doc.text(`Betrag: CHF ${inv.amount.toFixed(2)}`, 20, 60);
-    const mwstBetrag = (inv.amount * (inv.mwst / 100)).toFixed(2);
-    doc.text(`MWST (${inv.mwst}%): CHF ${mwstBetrag}`, 20, 70);
-    const total = (inv.amount + parseFloat(mwstBetrag)).toFixed(2);
-    doc.text(`Gesamtbetrag: CHF ${total}`, 20, 80);
-    doc.save(`${inv.number}.pdf`);
-  };
-
-  const handleLogoUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onloadend = () => setLogo(reader.result);
-    reader.readAsDataURL(file);
-  };
-
   const exportCSV = () => {
     const rows = [
       [
@@ -133,7 +104,7 @@ export default function InvoiceDemo() {
       <h1 style={{ textAlign: "center", color: "#333" }}>Rechnungs-Demo mit Kundenverwaltung</h1>
 
       <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
-        <input type="file" accept="image/*" onChange={handleLogoUpload} style={{ display: "block", marginBottom: "10px" }} />
+        <input type="file" accept="image/*" onChange={(e) => setLogo(e.target.files[0]?.name)} style={{ display: "block", marginBottom: "10px" }} />
       </div>
 
       <h2 style={{ color: "#555" }}>Rechnung erstellen</h2>
@@ -213,21 +184,6 @@ export default function InvoiceDemo() {
           <div><strong>Beschreibung:</strong> {inv.description}</div>
           <div><strong>MWST:</strong> {inv.mwst}%</div>
           <div><strong>Fälligkeitsdatum:</strong> {inv.dueDate}</div>
-          <button
-            onClick={() => generatePDF(inv)}
-            style={{
-              marginTop: "10px",
-              marginRight: "10px",
-              padding: "8px 15px",
-              backgroundColor: "#4CAF50",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            PDF herunterladen
-          </button>
           <button
             onClick={() => editInvoice(inv)}
             style={{
