@@ -178,43 +178,4 @@ export default function InvoiceDemo() {
         <div key={inv.id} style={{ border: "1px solid #ccc", padding: "15px", marginBottom: "15px", borderRadius: "5px" }}>
           <div><strong>Rechnungsnummer:</strong> {inv.number}</div>
           <div><strong>Kunde:</strong> {inv.client}</div>
-          <div><strong>Betrag:</strong> CHF {inv.amount.toFixed(2)}</div>
-          <div><strong>Datum:</strong> {inv.date}</div>
-          <div><strong>Status:</strong> {inv.status}</div>
-          <div><strong>Beschreibung:</strong> {inv.description}</div>
-          <div><strong>MWST:</strong> {inv.mwst}%</div>
-          <div><strong>Fälligkeitsdatum:</strong> {inv.dueDate}</div>
-          <button
-            onClick={() => editInvoice(inv)}
-            style={{
-              marginTop: "10px",
-              marginRight: "10px",
-              padding: "8px 15px",
-              backgroundColor: "#FF9800",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            Bearbeiten
-          </button>
-          <button
-            onClick={() => deleteInvoice(inv.id)}
-            style={{
-              marginTop: "10px",
-              padding: "8px 15px",
-              backgroundColor: "#F44336",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            Löschen
-          </button>
-        </div>
-      ))}
-    </div>
-  );
-}
+          <div><strong>Betrag:</strong
